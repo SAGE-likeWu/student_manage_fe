@@ -16,11 +16,11 @@
 
       <h3 class="login_title">系统登录</h3>
       <el-form-item>
-        <el-input type="text" v-model="loginForm.adminName"
+        <el-input type="text" v-model="loginForm.username"
                   auto-complete="off" placeholder="账号"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input type="password" v-model="loginForm.passWord"
+        <el-input type="password" v-model="loginForm.password"
                   auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
       <el-form-item style="width: 100%">
@@ -38,8 +38,8 @@
       data () {
         return {
           loginForm: {
-            adminName:'',
-            passWord: ''
+            username:'',
+            password: ''
           },
         }
       },
@@ -49,7 +49,7 @@
           // this.$router.push({'path':'/information/select'})
           // this.$router.push({'path':'/information/select'})
 
-          this.$axios.post('/login',this.loginForm)
+          this.$axios.post('/login/sysUserLogin',this.loginForm)
             .then(res => {
               if (res.data.code === 200) {
                 this.$store.commit('SET_TOKEN',res.data.data.token)

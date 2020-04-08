@@ -7,35 +7,46 @@
         <el-menu-item-group>
 
           <el-submenu index="1">
-            <template slot="title">按班级 </template>
-            <el-submenu index="1-1" @click="findgradeid(1)">
-              <template slot="title">高一 </template>
-              <el-menu-item  @click="findgradeclassid(1,1)">1班</el-menu-item>
-              <el-menu-item  @click="findgradeclassid(1,2)">2班</el-menu-item>
-              <el-menu-item  @click="findgradeclassid(1,3)">3班</el-menu-item>
-            </el-submenu>
-            <el-submenu index="1-2">
-              <template slot="title">高二</template>
-            </el-submenu>
-            <el-submenu index="1-3">
-              <template slot="title">高三</template>
-            </el-submenu>
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span slot="title">发货管理</span>
+            </template>
+
+              <el-menu-item  @click="findgradeclassid(1,1)">
+                <i class="el-icon-document"></i>
+                <span slot="title">面单导入</span>
+              </el-menu-item>
+              <el-menu-item  @click="findgradeclassid(1,2)">
+                <i class="el-icon-document" ></i>
+                <span slot="title">面单列表</span>
+              </el-menu-item>
           </el-submenu>
 
-          <el-menu-item  @click="openname">按姓名</el-menu-item>
-          <el-menu-item  @click="openstuid">按学号</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span slot="title">退货管理</span>
+            </template>
+          </el-submenu>
+
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span slot="title">综合查询</span>
+            </template>
+          </el-submenu>
+<!--          <el-menu-item  @click="openname">按姓名</el-menu-item>-->
+<!--          <el-menu-item  @click="openstuid">按学号</el-menu-item>-->
         </el-menu-item-group>
-        <el-menu-item @click="openidcard">按身份证</el-menu-item>
+<!--        <el-menu-item @click="openidcard">按身份证</el-menu-item>-->
 
 
       </el-menu>
     </el-aside>
 
     <el-container >
-
-      <el-header style="text-align: center; font-size: 12px">
-        <span style="font-size: 17px">学生信息列表</span>
-
+      <el-header style="text-align: left; font-size: 8px">
+        <span style="font-size: 12px">运单管理</span>
       </el-header>
 
       <el-main>
