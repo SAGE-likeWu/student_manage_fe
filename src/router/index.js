@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
-import Score from '@/components/Score'
 import Home from '@/components/common/Home'
-import SelectScore from '@/components/score/SelectScore'
-import InsertScore from '@/components/score/InsertScore'
-import UpdateScore from '@/components/score/UpdateScore'
+import SelectInformation from '@/components/information/SelectInformation'
+import InsertInformation from '@/components/information/InsertInformation'
+import UpdateInformation from '@/components/information/UpdateInformation'
 import cookies from 'js-cookie'
 import Vuex from 'vuex'
 
@@ -23,29 +22,29 @@ export default new Router({
       redirect: '/login',
       children: [
         {
-          path: '/score/select',
-          name: 'SelectScore',
-          component: SelectScore,
+          path: '/information/select',
+          name: 'SelectInformation',
+          component: SelectInformation,
           meta: {
             requireAuth: true
           }
         },
         {
-          path: '/score/update',
-          name: 'UpdateScore',
-          component: UpdateScore,
+          path: '/information/update',
+          name: 'UpdateInformation',
+          component: UpdateInformation,
           meta: {
             requireAuth: true
           }
         },
         {
-          path: '/score/insert',
-          name: 'InsertScore',
-          component: InsertScore,
+          path: '/information/insert',
+          name: 'InsertInformation',
+          component: InsertInformation,
           meta: {
             requireAuth: true
           }
-        },
+        }
       ]
     },
 
