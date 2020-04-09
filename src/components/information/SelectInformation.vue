@@ -12,11 +12,11 @@
               <span slot="title">发货管理</span>
             </template>
 
-              <el-menu-item  @click="findgradeclassid(1,1)">
+              <el-menu-item  @click="findwaybillinfo()">
                 <i class="el-icon-document"></i>
                 <span slot="title">面单导入</span>
               </el-menu-item>
-              <el-menu-item  @click="findgradeclassid(1,2)">
+              <el-menu-item  @click="findwaybillinfo()">
                 <i class="el-icon-document" ></i>
                 <span slot="title">面单列表</span>
               </el-menu-item>
@@ -51,18 +51,29 @@
 
       <el-main>
         <el-table :data="tableData">
-          <el-table-column prop="studentId" label="学号" width="140">
-          </el-table-column>
-          <el-table-column prop="gradeId" label="年级" width="140">
-          </el-table-column>
-          <el-table-column prop="classId" label="班级" width="140">
-          </el-table-column>
-          <el-table-column prop="studentName" label="姓名" width="120">
-          </el-table-column>
-          <el-table-column prop="sex" label="性别">
-          </el-table-column>
-          <el-table-column prop="idCard" label="身份证">
-          </el-table-column>
+          <el-table-column prop="id" label="id"/>
+          <el-table-column prop="outerWaybillNo" label="外部运单号"/>
+          <el-table-column prop="createTime" label="新增时间" />
+          <el-table-column prop="logisticsWaybillNo" label="物流运单号"/>
+          <el-table-column prop="consignmentTime" label="托运时间"/>
+          <el-table-column prop="deliverMan" label="发货人"/>
+          <el-table-column prop="deliverCompany" label="发货公司"/>
+          <el-table-column prop="delverContact" label="发货人联系电话"/>
+          <el-table-column prop="deliverProvince" label="发货省"/>
+          <el-table-column prop="deliverCity" label="发货市"/>
+          <el-table-column prop="deliverDistract" label="发货区县"/>
+          <el-table-column prop="deliverAddress" label="发货详细地址"/>
+          <el-table-column prop="receiveMan" label="收货人"/>
+          <el-table-column prop="receiveProvince" label="收货省"/>
+          <el-table-column prop="receiveCity" label="收货市"/>
+          <el-table-column prop="receiveDistract" label="收货区县"/>
+          <el-table-column prop="receiveAddress" label="收货详细地址"/>
+          <el-table-column prop="originalPlace" label="始发地"/>
+          <el-table-column prop="destination" label="目的地"/>
+          <el-table-column prop="packgeType" label="包装类型"/>
+          <el-table-column prop="quantity" label="件数"/>
+          <el-table-column prop="weight" label="重量"/>
+          <el-table-column prop="volume" label="体积"/>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -77,12 +88,24 @@
             </template>
           </el-table-column>
         </el-table>
+
+        <el-row>
+      <!--<span style="float: left;margin-right: 20px">
+        <el-button type="primary" size="small"  @click="handleExport(1)">导出全部筛选值</el-button>
+      </span>-->
+          <el-pagination
+            :current-page.sync="pagin.currentPage"
+            :page-size="pagin.pageSize"
+            layout="total, prev, pager, next"
+            background
+            :total="pagin.total">
+          </el-pagination>
+        </el-row>
       </el-main>
     </el-container>
 
   </el-container>
 </template>
-
 <script>
 
     export default {
@@ -90,41 +113,46 @@
       name: "SelectInformation",
 
       data() {
-        this.$axios.get(`student/getAll`).then(res => {
+        this.$axios.get(`\`waybill/find`).then(res => {
           if(res.data.code==200){
-            this.tableData = res.data.data
+            this.tableData = res.data.data.items
           }
         })
+
         return {
+          rowId: 0,
+          isLoading: false,
+          pagin: {
+            currentPage: 1,
+            pageSize: 10,
+            total: 0
+          },
           tableData: [],
-          gradeclass:{
-            gradeId:'',
-            classId:'',
+          waybill: {
+            id:'',
+            outerWaybillNo:'',
+            createTime:'',
+            logisticsWaybillNo:'',
+            consignmentTime:''
           }
         }
       },
       methods:{
-        findgradeclassid(grade,classid) {
-          if (grade==1) {
-            this.gradeclass.gradeId="高一";
-            this.gradeclass.classId=`${classid}班`
-            this.$axios.post(`student/get/gradeclass`,this.gradeclass).then(res => {
-              this.tableData = res.data.data
-            })
-          }else if (grade==2){
-            this.gradeclass.gradeId="高二";
-            this.gradeclass.classId=`${classid}班`
-            this.$axios.post(`student/get/gradeclass`,this.gradeclass).then(res => {
-              this.tableData = res.data.data
-            })
-          } else{
-            this.gradeclass.gradeId="高三";
-            this.gradeclass.classId=`${classid}班`
-            this.$axios.post(`student/get/gradeclass`,this.gradeclass).then(res => {
-              this.tableData = res.data.data
-            })
-          }
+
+        findwaybillinfo(){
+          this.$axios.post(`waybill/find`,this.waybill).then(res => {
+            if (res.data.code == 200){
+              this.tableData = res.data.data.items
+            }else {
+              this.$notify.error({
+                title: '错误',
+                message: res.data.msg
+              });
+            }
+
+          })
         },
+
         openname() {
           this.$prompt('请输入学生姓名', {
             confirmButtonText: '确定',
