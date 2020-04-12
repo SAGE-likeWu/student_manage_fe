@@ -51,11 +51,10 @@
 
       <el-main>
         <t-filter :filter="filter" @onSearch="getData()"></t-filter>
-        <!--<el-table :data="tableData">
-          <el-table-column prop="id" label="id"/>
-          <el-table-column prop="outerWaybillNo" label="外部运单号"/>
-          <el-table-column prop="createTime" label="新增时间"/>
-        </el-table>-->
+        <el-table :data="tableData">
+          <el-table-column prop="time" label="时间"/>
+          <el-table-column prop="context" label="内容"/>
+        </el-table>
       </el-main>
     </el-container>
 
@@ -95,9 +94,8 @@
           this.isLoading = true
 
           let {data = {}} = await getWaybillTrace({ ...filter})
-          let list = data.items || []
+          let list = data || []
           this.tableData = list
-          this.pagin.total = data.totalNum
         } catch (error) {
           console.log(error)
         } finally {
@@ -108,6 +106,22 @@
   }
 </script>
 
-<style scoped>
 
+<style>
+  html, body {
+    padding: 0;
+    margin: 0;
+  }
+
+  .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+
+  .el-aside {
+    background-color: #003366;
+    color: #333;
+
+  }
 </style>
