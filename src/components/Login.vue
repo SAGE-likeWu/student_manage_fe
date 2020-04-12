@@ -3,13 +3,13 @@
 
 
   <img class="title_show"
-    src="../assets/title.png"
     width="600"
     height="170"
     usemap="#mp"
     title=""
     cursor="default">
 
+  <h1 class="system_title">卓讯物流管理系统</h1>
     <el-form class="login-container" label-position="left"
              label-width="0px">
 
