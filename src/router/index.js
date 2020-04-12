@@ -5,6 +5,7 @@ import Home from '@/components/common/Home'
 import SelectInformation from '@/components/information/SelectInformation'
 import InsertInformation from '@/components/information/InsertInformation'
 import UpdateInformation from '@/components/information/UpdateInformation'
+import SelectTrace from '@/components/trace/SelectTrace'
 import cookies from 'js-cookie'
 import Vuex from 'vuex'
 
@@ -44,7 +45,15 @@ export default new Router({
           meta: {
             requireAuth: true
           }
-        }
+        },
+        {
+          path: '/trace/select',
+          name: 'SelectTrace',
+          component: SelectTrace,
+          meta: {
+            requireAuth: true
+          }
+        },
       ]
     },
 
