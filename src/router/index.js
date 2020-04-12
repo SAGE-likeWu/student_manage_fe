@@ -51,7 +51,7 @@ export default new Router({
           name: 'SelectTrace',
           component: SelectTrace,
           meta: {
-            requireAuth: true
+            requireAuth: false
           }
         },
       ]

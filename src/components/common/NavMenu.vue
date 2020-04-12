@@ -1,20 +1,20 @@
 <template>
 
   <el-menu router :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-<!--    <el-menu-item ><i class="el-icon-s-tools"></i>管理中心</el-menu-item>-->
+
     <el-submenu >
       <template slot="title" >物流管理</template>
+
       <el-menu-item index="/information/select">
         <template slot="title"><i class="el-icon-search"></i>查询</template>
-
       </el-menu-item>
+
       <el-menu-item index="/information/insert">
         <template slot="title" ><i class="el-icon-circle-plus"></i>添加</template>
-
       </el-menu-item>
+
       <el-menu-item index="/information/update">
         <template slot="title"><i class="el-icon-edit"></i>修改</template>
-
       </el-menu-item>
 
       <el-menu-item index="/information/select">
@@ -22,7 +22,7 @@
       </el-menu-item>
     </el-submenu>
 <!--    <el-button @click="loginOut" class="btn" ><i class="el-icon-switch-button"></i>退出登录</el-button>-->
-    <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">西安卓讯供应链有限公司</span>
+    <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">西安卓讯物流管理平台</span>
     <el-button icon="el-icon-switch-button" circle @click="loginOut" class="btn" ></el-button>
     <el-avatar :size="small" class="btn" :src="`https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`"></el-avatar>
 
