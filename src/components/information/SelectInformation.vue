@@ -11,11 +11,11 @@
               <span slot="title">发货管理</span>
             </template>
 
-              <el-menu-item  @click="findwaybillinfo()">
+              <el-menu-item @click="handleFilterConfirm()">
                 <i class="el-icon-document"></i>
                 <span slot="title">面单导入</span>
               </el-menu-item>
-              <el-menu-item  @click="findwaybillinfo()">
+              <el-menu-item  @click="handleFilterConfirm()">
                 <i class="el-icon-document" ></i>
                 <span slot="title">面单列表</span>
               </el-menu-item>
@@ -49,6 +49,7 @@
       </el-header>
 
       <el-main>
+        <m-filter :filter="filter" @onSearch="handleFilterConfirm"></m-filter>
         <el-table :data="tableData">
           <el-table-column prop="id" label="id"/>
           <el-table-column prop="outerWaybillNo" label="外部运单号"/>
@@ -93,6 +94,7 @@
         <el-button type="primary" size="small"  @click="handleExport(1)">导出全部筛选值</el-button>
       </span>-->
           <el-pagination
+            @current-change="handleCurrentChange"
             :current-page.sync="pagin.currentPage"
             :page-size="pagin.pageSize"
             layout="total, prev, pager, next"
@@ -107,20 +109,22 @@
 </template>
 <script>
 
+  import { cloneDeep } from 'lodash'
+  import { waybillFind} from '../api/waybill'
+  import MFilter from './filter'
+
     export default {
+
       inject:['reload'],
       name: "SelectInformation",
 
+      components: { MFilter },
+
       data() {
-        this.$axios.get(`\`waybill/find`).then(res => {
-          if(res.data.code==200){
-            this.tableData = res.data.data.items
-          }
-        })
 
         return {
           rowId: 0,
-          isLoading: false,
+          isLoading: true,
           pagin: {
             currentPage: 1,
             pageSize: 10,
@@ -133,25 +137,49 @@
             createTime:'',
             logisticsWaybillNo:'',
             consignmentTime:''
-          }
+          },
+          filter: {
+            id:'',
+            outerWaybillNo:'',
+            createTime:'',
+            logisticsWaybillNo:'',
+            consignmentTime:''
+          },
         }
       },
+
       methods:{
 
-        findwaybillinfo(){
-          this.$axios.post(`waybill/find`,this.waybill).then(res => {
-            if (res.data.code == 200){
-              this.tableData = res.data.data.items
-              this.pagin.total = res.data.data.totalNum
-            }else {
-              this.$notify.error({
-                title: '错误',
-                message: res.data.msg
-              });
-            }
+        async getData () {
+          let filter = cloneDeep(this.filter)
 
-          })
+          filter.createTimeStart = filter.createTime ? filter.createTime[0] : ''
+          filter.createTimeEnd = filter.createTime ? filter.createTime[1] : ''
+
+          try {
+            this.isLoading = true
+
+            let { data = {} } = await waybillFind({ pageSize: this.pagin.pageSize, currentPage: this.pagin.currentPage, ...filter })
+            let list = data.items || []
+            this.tableData = list
+            this.pagin.total = data.totalNum
+          } catch (error) {
+            console.log(error)
+          } finally {
+            this.isLoading = false
+          }
         },
+
+        handleFilterConfirm () {
+          this.pagin.currentPage = 1
+          this.getData()
+        },
+
+        handleCurrentChange (page) {
+          this.pagin.currentPage = page
+          this.getData()
+        },
+
 
         openname() {
           this.$prompt('请输入学生姓名', {
