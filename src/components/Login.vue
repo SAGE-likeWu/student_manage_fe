@@ -2,12 +2,7 @@
   <body id="poster">
 
 
-  <img class="title_show"
-    width="600"
-    height="170"
-    usemap="#mp"
-    title=""
-    cursor="default">
+  <h1 class="title_show"/>
 
   <h1 class="system_title">卓讯物流管理系统</h1>
     <el-form class="login-container" label-position="left"
@@ -61,7 +56,7 @@
                 this.$router.push({'path':'/information/select'})
               }else {
                 this.$message({
-                  message: '登陆失败',
+                  message: '账号或密码错误',
                   type: 'error'
                 })
               }
