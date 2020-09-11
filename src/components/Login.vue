@@ -2,25 +2,20 @@
   <body id="poster">
 
 
-  <img class="title_show"
-    src="../assets/title.png"
-    width="600"
-    height="170"
-    usemap="#mp"
-    title=""
-    cursor="default">
+  <h1 class="title_show"/>
 
+  <h1 class="system_title">卓讯物流管理系统</h1>
     <el-form class="login-container" label-position="left"
              label-width="0px">
 
 
       <h3 class="login_title">系统登录</h3>
       <el-form-item>
-        <el-input type="text" v-model="loginForm.adminName"
+        <el-input type="text" v-model="loginForm.username"
                   auto-complete="off" placeholder="账号"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input type="password" v-model="loginForm.passWord"
+        <el-input type="password" v-model="loginForm.password"
                   auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
       <el-form-item style="width: 100%">
@@ -38,8 +33,8 @@
       data () {
         return {
           loginForm: {
-            adminName:'',
-            passWord: ''
+            username:'',
+            password: ''
           },
         }
       },
@@ -49,7 +44,7 @@
           // this.$router.push({'path':'/information/select'})
           // this.$router.push({'path':'/information/select'})
 
-          this.$axios.post('/login',this.loginForm)
+          this.$axios.post('/login/sysUserLogin',this.loginForm)
             .then(res => {
               if (res.data.code === 200) {
                 this.$store.commit('SET_TOKEN',res.data.data.token)
@@ -61,7 +56,7 @@
                 this.$router.push({'path':'/information/select'})
               }else {
                 this.$message({
-                  message: '登陆失败',
+                  message: '账号或密码错误',
                   type: 'error'
                 })
               }
